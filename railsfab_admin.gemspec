@@ -7,11 +7,11 @@ require "railsfab_admin/version"
 Gem::Specification.new do |s|
   s.name        = "railsfab_admin"
   s.version     = RailsfabAdmin::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of RailsfabAdmin."
-  s.description = "TODO: Description of RailsfabAdmin."
+  s.authors     = ["bhaskar8088"]
+  s.email       = ["bhaskar8088@gmail.com"]
+  s.homepage    = "http://www.railsfab.com"
+  s.summary     = "Easy interface to add/edit table data."
+  s.description = "Easy interface to add/edit table data."
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
