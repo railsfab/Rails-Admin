@@ -1,0 +1,5 @@
+<h1>Records for <%= params[:model_name] %></h1>
+
+<% @tables.each do |table| %>
+    <h3><%= link_to table, show_record_path(id: table.id)  %></h3>
+<% end %>

@@ -1,0 +1,9 @@
+<h1>Record details for <%= @record.id %> for model <%= params[:model_name] %>.</h1>
+
+<% @model.column_names.each do |col| %>
+<div>
+    <span class="a"><%= col %></span>
+    <span ><%= @record.read_attribute(col) %></span>
+</div>
+<% end %>
+
