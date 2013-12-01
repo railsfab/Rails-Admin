@@ -9,15 +9,37 @@ module RailsfabAdmin
         column_type = column.type
         html_name = "#{model_name}[#{column_name}]"
         html_id = "#{model_name}_#{column_name}"
+        label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}'  class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{column_name.capitalize}</span></label>"
 
         if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
-            "<label for='#{html_id}'>#{column_name.capitalize}</label><input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' />"
+            "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' />"
         elsif column_type == :text
-            "<label for='#{html_id}'>#{column_name.capitalize}</label><textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' ></textarea>"
+            "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' ></textarea>"
         elsif column_type == :boolean
-            "<label for='#{html_id}'>#{column_name.capitalize}</label><input type='checkbox' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column_name)}' />"
+            "#{label}<input type='checkbox' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column_name)}' />"
         end
     end
+
+    def get_html_field_value(model, instance, column)
+        column_name = column.name
+        if column_name == "id"
+            return ""
+        end
+        model_name = model.to_s.downcase
+        column_type = column.type
+        html_name = "#{model_name}[#{column_name}]"
+        html_id = "#{model_name}_#{column_name}"
+        label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{column_name.capitalize}</span></label>"
+
+        if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
+            "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' value='#{instance.read_attribute(column_name)}' />"
+        elsif column_type == :text
+            "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' >#{instance.read_attribute(column_name)}</textarea>"
+        elsif column_type == :boolean
+            "#{label}<input type='checkbox' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column_name)}' />"
+        end
+    end
+
 
     def get_field_class(column)
         classes = "form-control "

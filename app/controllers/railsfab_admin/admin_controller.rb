@@ -21,7 +21,18 @@ module RailsfabAdmin
         else
             render :new
         end
+    end
 
+    def update
+        @model = params[:table].classify.constantize
+        @instance = @model.find params[:id]
+        @instance.assign_attributes edit_record_params(@model)
+        if @instance.valid?
+            @instance.save
+            redirect_to show_record_path(@model, @instance)
+        else
+            render :edit
+        end
     end
 
     def show_record
@@ -34,6 +45,11 @@ module RailsfabAdmin
         @tables = @model.all
     end
 
+    def edit
+        @model = params[:table].classify.constantize
+        @instance = @model.find params[:id]
+    end
+
     private
 
     def new_record_params(model)
@@ -41,6 +57,14 @@ module RailsfabAdmin
         columns.delete(:id)
         params.require(model.to_s.downcase.to_sym).permit(columns)
     end
+
+    def edit_record_params(model)
+        columns = model.column_names.map { |column| column.to_sym }
+        columns.delete(:id)
+        columns = columns.select { |column| params[:enabled_fields].include? column }
+        params.require(model.to_s.downcase.to_sym).permit(columns)
+    end
+
 
 
   end
