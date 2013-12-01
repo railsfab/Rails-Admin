@@ -7,7 +7,8 @@ module RailsfabAdmin
     end
 
     def new
-        @model = params[:table].classify.constantize.new
+        @model = params[:table].classify.constantize
+        @new_model = @model.new
     end
 
     def create

@@ -11,3 +11,10 @@
  *= require_self
  *= require_tree .
  */
+
+
+.container .bottom-flat {
+    border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;
+}
+form label { margin-top: 15px; }
+form input[type=submit] { margin-top: 15px; }

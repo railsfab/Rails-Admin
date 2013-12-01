@@ -3,12 +3,14 @@
 <head>
   <title>RailsfabAdmin</title>
   <%= stylesheet_link_tag    "railsfab_admin/application", media: "all" %>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <%= javascript_include_tag "railsfab_admin/application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+    <div class="container">
+        <%= yield %>
+    </div>
 
 </body>
 </html>

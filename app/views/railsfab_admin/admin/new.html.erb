@@ -1,0 +1,21 @@
+
+<div class='col-md-4'>
+<button class='btn btn-info btn-lg bottom-flat'>New </button>
+<div class='well col-md-12'>
+<% if @new_model.errors.any? %>
+    <p class='alert alert-danger'>Errors</p>
+    <% @new_model.errors.full_messages.each do |e| %>
+        <p class='text-danger'><%= e %></p>
+    <% end %>
+<% end %>
+<%= form_for @new_model, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
+    <% @model.columns.each do |col| %>
+        <%= get_html_field(@model, col).html_safe %>
+    <% end %>
+    <%= f.submit "Create", class: "btn btn-primary"%>
+
+<% end %>
+</div>
+</div>
+
+
