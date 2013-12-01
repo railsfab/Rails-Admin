@@ -1,5 +1,5 @@
-<h1>Index</h1>
+<h1 class="centered">Models</h1>
 
 <% @tables.each do |table| %>
-    <h3><%= link_to table.capitalize, show_records_path(table)  %></h3>
+    <%= link_to table.capitalize, show_records_path(table), class: "btn btn-primary btn-lg btn-block"  %>
 <% end %>

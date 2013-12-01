@@ -1,6 +1,7 @@
-<h1>Records for <%= params[:model_name] %></h1>
-<%= link_to "New", :new_record %>
+
+<%= link_to "New #{params[:table].singularize.capitalize}", :new_record, class: "btn btn-primary btn-lg" %>
+<h1>Available <%= params[:table].capitalize %></h1>
 
 <% @tables.each do |table| %>
-    <h3><%= link_to table, show_record_path(id: table.id)  %></h3>
+    <%= link_to table, show_record_path(id: table.id), class: "btn btn-primary  btn-block"  %>
 <% end %>
