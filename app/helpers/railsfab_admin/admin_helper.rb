@@ -9,7 +9,8 @@ module RailsfabAdmin
         column_type = column.type
         html_name = "#{model_name}[#{column_name}]"
         html_id = "#{model_name}_#{column_name}"
-        label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}'  class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{column_name.capitalize}</span></label>"
+        label_name = column_name.split("_").map{|i| i.capitalize }.join(" ")
+        label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}'  class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{label_name}</span></label>"
 
         if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
             "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' />"
@@ -29,7 +30,8 @@ module RailsfabAdmin
         column_type = column.type
         html_name = "#{model_name}[#{column_name}]"
         html_id = "#{model_name}_#{column_name}"
-        label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{column_name.capitalize}</span></label>"
+        label_name = column_name.split("_").map{|i| i.capitalize }.join(" ")
+        label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{label_name}</span></label>"
 
         if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
             "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' value='#{instance.read_attribute(column_name)}' />"
