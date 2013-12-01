@@ -1,10 +1,14 @@
-<h1>Record details for <%= @record.id %> for model <%= params[:model_name] %>.</h1>
+<h2>Details for id: <%= @record.id %> for model <%= params[:table].singularize.capitalize %></h2>
 <%= link_to :Edit, edit_record_path(@model, @record), class: "btn btn-primary" %>
 
+<dl class="dl-horizontal"> 
 <% @model.column_names.each do |col| %>
-<div>
-    <span class="a"><%= col %></span>
-    <span ><%= @record.read_attribute(col) %></span>
-</div>
+    <dt>
+        <span class="a"><%= col %></span>
+    </dt>
+    <dd>
+        <span ><%= @record.read_attribute(col) %></span>
+    </dd>
 <% end %>
+</dl>
 
