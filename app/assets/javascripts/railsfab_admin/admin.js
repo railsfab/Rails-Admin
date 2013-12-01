@@ -8,3 +8,5 @@ $(".submit_btn").click(function(e){
         alert("Please enable some of the fields(by checking) so only selected fields will be updated");
     }
 });
+
+$(".date").datepicker();
