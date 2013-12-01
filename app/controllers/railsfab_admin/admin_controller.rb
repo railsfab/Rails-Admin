@@ -12,6 +12,15 @@ module RailsfabAdmin
     end
 
     def create
+        @model = params[:table].classify.constantize
+        @new_model = @model.new new_record_params(@model)
+        if @new_model.valid?
+            @new_model.save
+            flash[:notice] = "A new record with id: #{@new_model.id} for the model #{@model} is created successfully/"
+            redirect_to show_record_path(@model, @new_model)
+        else
+            render :new
+        end
 
     end
 
@@ -24,6 +33,15 @@ module RailsfabAdmin
         @model = params[:table].classify.constantize
         @tables = @model.all
     end
+
+    private
+
+    def new_record_params(model)
+        columns = model.column_names.map { |column| column.to_sym }
+        columns.delete(:id)
+        params.require(model.to_s.downcase.to_sym).permit(columns)
+    end
+
 
   end
 end
