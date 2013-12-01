@@ -3,7 +3,15 @@ require_dependency "railsfab_admin/application_controller"
 module RailsfabAdmin
   class AdminController < ApplicationController
     def index
-        @tables = ActiveRecord::Base.connection.tables
+        @tables = ActiveRecord::Base.connection.tables.select {
+            |i|
+            begin
+                i.classify.constantize
+                true
+            rescue NameError
+                false
+            end
+        }
     end
 
     def new
