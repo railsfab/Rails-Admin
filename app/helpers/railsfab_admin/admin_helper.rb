@@ -13,9 +13,9 @@ module RailsfabAdmin
         label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}'  class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{label_name}</span></label>"
 
         if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
-            "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' />"
+            "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' />"
         elsif column_type == :text
-            "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' ></textarea>"
+            "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' ></textarea>"
         elsif column_type == :boolean
             "#{label}<input type='checkbox' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column_name)}' />"
         end
@@ -34,9 +34,9 @@ module RailsfabAdmin
         label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field'  name='enabled_fields[#{column_name}]' /><span class='label-text'>#{label_name}</span></label>"
 
         if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
-            "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{column_name}' value='#{instance.read_attribute(column_name)}' />"
+            "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' value='#{instance.read_attribute(column_name)}' />"
         elsif column_type == :text
-            "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' >#{instance.read_attribute(column_name)}</textarea>"
+            "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' >#{instance.read_attribute(column_name)}</textarea>"
         elsif column_type == :boolean
             "#{label}<input type='checkbox' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column_name)}' />"
         end
