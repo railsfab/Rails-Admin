@@ -11,8 +11,26 @@ module RailsfabAdmin
         html_id = "#{model_name}_#{column_name}"
         label_name = column_name.split("_").map{|i| i.capitalize }.join(" ")
         label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}'  class='cb-enable-field' checked name='enabled_fields[#{column_name}]' /><span class='label-text'>#{label_name}</span></label>"
+        foreign_keys_hash = {}
+        foreign_keys = model.reflect_on_all_associations.select{
+            |mac| mac.macro == :belongs_to 
+        }.map{ 
+            |i|
+            foreign_keys_hash[i.foreign_key] = i.class_name
+            i.foreign_key
+        }
 
-        if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
+
+        if column_type == :integer
+            if foreign_keys.include? column_name
+                label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field'  name='enabled_fields[#{column_name}]' /><span class='label-text'>#{foreign_keys_hash[column_name].capitalize}</span></label>"
+                foreign_objects = foreign_keys_hash[column_name].classify.constantize.all
+                html_options = foreign_objects.map{ |i| "<option value='#{i.id}'>#{i}</option>" }.join("")
+                "#{label}<select name='#{html_name}' id='#{html_id}' class='#{get_field_class(column)}'>#{html_options}</select>"
+            else
+                "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' />"
+            end
+        elsif [:string, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
             "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' />"
         elsif column_type == :text
             "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' ></textarea>"
@@ -32,8 +50,25 @@ module RailsfabAdmin
         html_id = "#{model_name}_#{column_name}"
         label_name = column_name.split("_").map{|i| i.capitalize }.join(" ")
         label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field'  name='enabled_fields[#{column_name}]' /><span class='label-text'>#{label_name}</span></label>"
+        foreign_keys_hash = {}
+        foreign_keys = model.reflect_on_all_associations.select{
+            |mac| mac.macro == :belongs_to 
+        }.map{ 
+            |i|
+            foreign_keys_hash[i.foreign_key] = i.class_name
+            i.foreign_key
+        }
 
-        if [:string, :integer, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
+        if column_type == :integer
+            if foreign_keys.include? column_name
+                label = "<label for='#{html_id}'><input type='checkbox' id='cb_#{html_id}' class='cb-enable-field'  name='enabled_fields[#{column_name}]' /><span class='label-text'>#{foreign_keys_hash[column_name].capitalize}</span></label>"
+                foreign_objects = foreign_keys_hash[column_name].classify.constantize.all
+                html_options = foreign_objects.map{ |i| "<option value='#{i.id}'>#{i}</option>" }.join("")
+                "#{label}<select name='#{html_name}' id='#{html_id}' data-val='#{instance.read_attribute(column_name)}' class='edit-select #{get_field_class(column)}'>#{html_options}</select>"
+            else
+                "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' />"
+            end
+        elsif [:string, :date, :datetime, :time, :float, :decimal, :timestamp, :binary].include? column_type
             "#{label}<input type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' value='#{instance.read_attribute(column_name)}' />"
         elsif column_type == :text
             "#{label}<textarea type='text' id='#{html_id}' name='#{html_name}' class='#{get_field_class(column)}' placeholder='#{label_name}' >#{instance.read_attribute(column_name)}</textarea>"

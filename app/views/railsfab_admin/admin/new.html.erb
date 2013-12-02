@@ -12,7 +12,7 @@
     <% @model.columns.each do |col| %>
         <%= get_html_field(@model, col).html_safe %>
     <% end %>
-    <%= f.submit "Create", class: "btn btn-primary"%>
+    <%= f.submit "Create", class: "btn btn-primary submit_btn"%>
 
 <% end %>
 </div>
